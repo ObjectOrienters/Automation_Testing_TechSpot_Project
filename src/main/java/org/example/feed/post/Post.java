@@ -1,6 +1,6 @@
 package org.example.feed.post;
 
-import org.example.BasePage;
+import org.example.utilities.BasePage;
 import org.openqa.selenium.WebDriver;
 
 public class Post extends BasePage {
@@ -8,7 +8,7 @@ public class Post extends BasePage {
         super(driver);
     }
     public void addingLikeToPost() {
-        BasePage.ClickElement(PostLocators.likeButton);
+        //BasePage.ClickElement(PostLocators.likeButton);
     }
 
 }
