@@ -8,10 +8,10 @@ public class LoginPage extends BasePage {
         super(driver);
     }
     public void loginToHomePage(String username, String password){
-            ClickElement(LoginLocators.LOGIN_BUTTON);
-            EnterText(LoginLocators.USERNAME_FILED, username);
-            EnterText(LoginLocators.PASSWORD_FIELD, password);
-            ClickElement(LoginLocators.LOGIN_BUTTON2);
+            clickElement(LoginLocators.LOGIN_BUTTON);
+            enterText(LoginLocators.USERNAME_FILED, username);
+            enterText(LoginLocators.PASSWORD_FIELD, password);
+            clickElement(LoginLocators.LOGIN_BUTTON2);
 
 
     }
