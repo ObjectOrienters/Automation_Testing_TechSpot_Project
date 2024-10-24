@@ -1,4 +1,4 @@
-package org.example.feed.post;
+package org.example.post;
 
 import org.openqa.selenium.By;
 

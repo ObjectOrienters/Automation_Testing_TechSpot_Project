@@ -23,7 +23,7 @@ public class BasePage {
         return wait.until(ExpectedConditions.presenceOfElementLocated(element));
     }
 
-    public void ClickElement(By element) {
+    public void clickElement(By element) {
         WebElement clickableElement = wait.until(ExpectedConditions.elementToBeClickable(element));
         clickableElement.click();
     }
@@ -32,7 +32,7 @@ public class BasePage {
     public String getElementText(By element) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(element)).getText();
     }
-    public void EnterText(By element, String text) {
+    public void enterText(By element, String text) {
         WebElement textElement = wait.until(ExpectedConditions.visibilityOfElementLocated(element));
         textElement.sendKeys(text);
     }
