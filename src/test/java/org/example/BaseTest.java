@@ -14,18 +14,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 public class BaseTest {
-    public static WebDriver driver;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+
     public static Properties config = new Properties();
 
-
     @BeforeAll
-    public static void setUp() throws IOException {
-        FileReader fr = new FileReader(System.getProperty("user.dir")+"/src/main/resources/config.properties");
+    public static void loadConfig() throws IOException {
+        FileReader fr = new FileReader(System.getProperty("user.dir") + "/src/main/resources/config.properties");
         config.load(fr);
         fr.close();
+    }
+
+    @BeforeEach
+    public void setUp() {
         switch (config.getProperty("browser").toLowerCase()) {
             case "chrome":
                 driver = new ChromeDriver();
@@ -39,26 +45,27 @@ public class BaseTest {
             default:
                 throw new IllegalArgumentException("Browser " + config.getProperty("browser") + " is not supported.");
         }
+
         driver.manage().window().maximize();
         driver.get(config.getProperty("url"));
-    }
 
-    @BeforeEach
-    public void beforeEach() {
-        if (driver == null) {
-            driver = new ChromeDriver();  // Ensure driver is initialized if it was quit
-        }
-        driver.get("http://localhost:3000/");
+        // Initialize WebDriverWait with the driver for each test
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));  // Increase timeout as needed
     }
 
     @AfterEach
-    public void afterEach() {
+    public void tearDown() {
         if (driver != null) {
             driver.quit();
-            System.out.println("Driver is quit");
-            driver = null;  // Avoid using driver after quit
         }
     }
 
+    // Helper methods for waiting conditions
+    public boolean waitUrl(String url) {
+        return wait.until(ExpectedConditions.urlContains(url));
+    }
 
+    public WebElement waitVisibilityOfElementLocated(By element) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
 }

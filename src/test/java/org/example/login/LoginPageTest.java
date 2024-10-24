@@ -1,31 +1,42 @@
 package org.example.login;
 
+import junit.framework.Assert;
 import org.example.BaseTest;
-import org.example.feed.post.Post;
+import org.example.utilities.CsvReader;
+import org.example.utilities.Constants;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import java.util.Map;
 
 public class LoginPageTest extends BaseTest {
-    Post post = new Post(driver);
+    LoginPage loginPage;
+
+    @BeforeEach
+    public void initPageObjects() {
+        loginPage = new LoginPage(driver);
+    }
+
     @Test
-    public void testLogin() {
-        //post.addingLikeToPost();
-        //WebElement bt = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/div/button[1]"));
-        //bt.click();
-        //BaseTest.ClickElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/div/button[1]"));
+    public void testLoginToHomePage_Success() {
+        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER1);
+        String username = credentials.get("username");
+        String password = credentials.get("password");
+        loginPage.loginToHomePage(username, password);
+        waitUrl(Constants.HOME_URL);
+        Assert.assertEquals(Constants.HOME_URL, driver.getCurrentUrl());
     }
     @Test
-    public void testLogin2() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement bt1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[1]/div/div/button[1]")));
-        bt1.click();
+    public void testLoginToHomePage_Fail() {
+        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER2);
+        String username = credentials.get("username");
+        String password = credentials.get("password");
+        loginPage.loginToHomePage(username, password);
+        WebElement errorToast = waitVisibilityOfElementLocated(LoginLocators.LOGIN_ERROR_TOAST);
+        Assertions.assertTrue(errorToast.isDisplayed(), LoginLocators.TOAST_ERROR_DOESNT_DISPLAYED);
 
-        WebElement bt = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/form/div[3]/button[1]"));
-        bt.click();
+
     }
 }
