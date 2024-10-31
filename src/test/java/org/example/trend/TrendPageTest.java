@@ -4,7 +4,6 @@ import junit.framework.Assert;
 import org.example.BaseTest;
 import org.example.trends.TrendPage;
 import org.example.trends.TrendsLocators;
-import org.example.login.LoginLocators;
 import org.example.login.LoginPage;
 import org.example.utilities.Constants;
 import org.example.utilities.CsvReader;
@@ -24,7 +23,7 @@ public class TrendPageTest extends BaseTest {
     }
     @Test
     public void testGoToTrendSpringPage_Success() {
-        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER1);
+        Map<String, String> credentials = CsvReader.readCSVFile(Constants.LOGIN_SUCCESS_CSV_FILE_PATH);
         String username = credentials.get("username");
         String password = credentials.get("password");
         loginPage.loginToHomePage(username, password);

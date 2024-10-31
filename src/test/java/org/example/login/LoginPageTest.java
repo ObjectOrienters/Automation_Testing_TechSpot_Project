@@ -21,7 +21,7 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void testLoginToHomePage_Success() {
-        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER1);
+        Map<String, String> credentials = CsvReader.readCSVFile(Constants.LOGIN_SUCCESS_CSV_FILE_PATH);
         String username = credentials.get("username");
         String password = credentials.get("password");
         loginPage.loginToHomePage(username, password);
@@ -30,12 +30,12 @@ public class LoginPageTest extends BaseTest {
     }
     @Test
     public void testLoginToHomePage_Fail() {
-        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER2);
+        Map<String, String> credentials = CsvReader.readCSVFile(Constants.LOGIN_FAIL_CSV_FILE_PATH);
         String username = credentials.get("username");
         String password = credentials.get("password");
         loginPage.loginToHomePage(username, password);
         WebElement errorToast = waitVisibilityOfElementLocated(LoginLocators.LOGIN_ERROR_TOAST);
-        Assertions.assertTrue(errorToast.isDisplayed(), LoginLocators.TOAST_ERROR_DOESNT_DISPLAYED);
+        Assertions.assertTrue(errorToast.isDisplayed(), LoginLocators.TOAST_ERROR_ISNT_DISPLAYED);
 
 
     }
