@@ -23,7 +23,7 @@ public class HomePageTest extends BaseTest {
     }
     @Test
     public void testLogout() {
-        Map<String, String> credentials = CsvReader.readSpecificUser(Constants.CSV_FILE_PATH, LoginLocators.USER1);
+        Map<String, String> credentials = CsvReader.readCSVFile(Constants.LOGIN_SUCCESS_CSV_FILE_PATH);
         String username = credentials.get("username");
         String password = credentials.get("password");
         loginPage.loginToHomePage(username, password);

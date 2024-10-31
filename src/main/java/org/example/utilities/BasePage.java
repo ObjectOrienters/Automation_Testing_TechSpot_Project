@@ -10,13 +10,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(0));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     }
     public WebElement findElement(By element) {
@@ -33,7 +33,7 @@ public class BasePage {
         return wait.until(ExpectedConditions.presenceOfElementLocated(element)).getText();
     }
     public void enterText(By element, String text) {
-        WebElement textElement = wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+        WebElement textElement = wait.until(ExpectedConditions.presenceOfElementLocated(element));
         textElement.sendKeys(text);
     }
 }

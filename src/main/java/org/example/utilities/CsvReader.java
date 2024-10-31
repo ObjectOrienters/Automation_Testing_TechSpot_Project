@@ -8,30 +8,23 @@ import java.util.Map;
 
 public class CsvReader {
 
-    public static Map<String, String> readSpecificUser(String filePath, int userIndex) {
-        String line = "";
-        String splitBy = ",";
-        int currentIndex = 0;
-        Map<String, String> credentials = new HashMap<>();
+    public static Map<String, String> readCSVFile(String filePath) {
+        Map<String, String> map = new HashMap<>();
+        String line;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            // Skip the header row
-            br.readLine();
-
-            // Read the file line by line to find the specific user
             while ((line = br.readLine()) != null) {
-                if (currentIndex == userIndex - 1) { // userIndex - 1 because user 1 is at index 0
-                    String[] userData = line.split(splitBy);
-                    credentials.put("username", userData[0]);
-                    credentials.put("password", userData[1]);
-                    break;
+                String[] keyValuePair = line.split(",", -1); // Split line by comma
+                if (keyValuePair.length >= 2) {
+                    String key = keyValuePair[0].trim();
+                    String value = keyValuePair[1].trim();
+                    map.put(key, value);
                 }
-                currentIndex++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return credentials;
+        return map;
     }
 }

@@ -50,7 +50,7 @@ public class BaseTest {
         driver.get(config.getProperty("url"));
 
         // Initialize WebDriverWait with the driver for each test
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));  // Increase timeout as needed
+        wait = new WebDriverWait(driver, Duration.ofSeconds(1));  // Increase timeout as needed
     }
 
     @AfterEach
