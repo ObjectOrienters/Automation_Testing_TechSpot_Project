@@ -20,7 +20,7 @@ public class LoginPageTest extends CrossBrowserBaseTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "safari"})
+    @ValueSource(strings = {"chrome", "firefox"})
     public void testLoginToHomePage_Success(String browser) {
         setUp(browser);
         loginPage = new LoginPage(driver);
@@ -32,7 +32,7 @@ public class LoginPageTest extends CrossBrowserBaseTest {
         Assertions.assertEquals(Constants.HOME_URL, driver.getCurrentUrl());
     }
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "safari"})
+    @ValueSource(strings = {"chrome", "firefox"})
     public void testLoginToHomePage_Fail(String browser) {
         setUp(browser);
         loginPage = new LoginPage(driver);

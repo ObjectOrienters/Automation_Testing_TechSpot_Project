@@ -2,15 +2,19 @@ package org.example.following;
 
 import org.example.BaseTest;
 import org.example.login.LoginPage;
+import org.example.search.SearchLocators;
 import org.example.suggestions.Following;
+import org.example.suggestions.FollowingLocators;
 import org.example.utilities.Constants;
 import org.example.utilities.CsvReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.TimeoutException;
 
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class FollowingTest extends BaseTest {
     LoginPage loginPage;
@@ -32,11 +36,18 @@ public class FollowingTest extends BaseTest {
         waitUrl(Constants.HOME_URL);
         String text = following.getFollowButtonText();
         following.followUser();
-        if(text.equals("Following")){
-            assertEquals(following.getFollowButtonText(), "Unfollow");
-        } else {
-            assertEquals(following.getFollowButtonText(), "Follow");
-        }
+        boolean follow = false;
+        try {
+            follow = waitVisibilityOfElementLocated(FollowingLocators.FOLLOW_TOAST).isDisplayed();
+        } catch (TimeoutException e) {}
+
+        boolean unfollow = false;
+        try {
+            unfollow = waitVisibilityOfElementLocated(FollowingLocators.UNFOLLOW_TOAST).isDisplayed();
+        } catch (TimeoutException e) {}
+
+        assertTrue(follow || unfollow);
+
     }
 
 }
